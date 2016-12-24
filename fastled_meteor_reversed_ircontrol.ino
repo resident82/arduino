@@ -16,6 +16,7 @@ struct CRGB leds[LED_COUNT];
 //================================================
 
 uint8_t hue = 20;
+_________________
 uint8_t hue2 = 20;
 uint8_t bright = 30;
 int del = 60; // скорость
