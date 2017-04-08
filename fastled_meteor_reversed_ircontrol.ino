@@ -4,19 +4,10 @@
 #define LED_COUNT 32
 #define LED_PIN 3
 #define RECV_PIN 11
-#define GRK_PIN 9
-
-int Giro_Pin = 6; // контакт для датчика
-int valGiro = 0; // переменная для хранения состояния датчика
-unsigned long timeOn = 0;
-unsigned long timeOff = 0;
-unsigned long delta = 0;
-
-struct CRGB leds[LED_COUNT];
 //================================================
 
+struct CRGB leds[LED_COUNT];
 uint8_t hue = 20;
-_________________
 uint8_t hue2 = 20;
 uint8_t bright = 30;
 int del = 60; // скорость
@@ -43,8 +34,6 @@ void setup() {
   LEDS.addLeds<WS2812B, LED_PIN, GRB>(leds, LED_COUNT);
   LEDS.setBrightness(bright);
 
-  pinMode(Giro_Pin, INPUT);
-
   Serial.begin(9600);
   irrecv.enableIRIn();
 }
@@ -62,23 +51,6 @@ void loop(){
   {
      gPatterns[gCurrentPatternNumber]();
   }
-
-  valGiro = digitalRead(Giro_Pin);
-  if (valGiro == HIGH) {
-    if (timeOn == 0) timeOn = millis();
-    timeOff = 0;
-  } else {
-    if (timeOff == 0) {
-      timeOff = millis();
-      delta = timeOff - timeOn;
-      del = delta;
-    }
-    timeOn = 0;
-  }
-
-  Serial.print(del);
-  Serial.print("\n");
-  
 }
 
 void nextPattern()
